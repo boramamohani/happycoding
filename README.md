@@ -1,5 +1,3 @@
-# happycoding
-
 - Repository를 fork해서 개발을 진행해주세요. 
 - ./sources에 있는 디자인을 구현해주세요.
 - datasource는 ./assets/javascripts/common.js 에 URL로 선언되어 있습니다.
