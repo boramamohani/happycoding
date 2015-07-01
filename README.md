@@ -6,6 +6,7 @@
 - framework, library, template engine, package manager 등은 자유롭게 사용하셔도(안 하셔도) 됩니다.
 - jade(haml), sass, coffeescript(babeljs)등은 자유롭게 사용하셔도(안 하셔도) 됩니다.
 - 웹서버 없이, 로컬 파일에서 열릴 수 있도록 해주세요. 
+
 -------
 #Data Sources
 - country: 프랑스 상품에 대한 데이터입니다. 프랑스의 도시 정보도 포함되어 있습니다.  
