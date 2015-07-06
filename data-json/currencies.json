@@ -1,0 +1,66 @@
+{
+  "USD": {
+    "symbol": "$",
+    "rate": "1.0"
+  },
+  "TWD": {
+    "symbol": "NT$",
+    "rate": "31.17495"
+  },
+  "THB": {
+    "symbol": "฿",
+    "rate": "32.73962"
+  },
+  "RUB": {
+    "symbol": "pуб",
+    "rate": "59.60432"
+  },
+  "NZD": {
+    "symbol": "NZ$",
+    "rate": "1.329391"
+  },
+  "MYR": {
+    "symbol": "RM",
+    "rate": "3.66664"
+  },
+  "KRW": {
+    "symbol": "₩",
+    "rate": "1116.80499"
+  },
+  "JPY": {
+    "symbol": "¥",
+    "rate": "120.114"
+  },
+  "HKD": {
+    "symbol": "HK$",
+    "rate": "7.757213"
+  },
+  "GBP": {
+    "symbol": "￡",
+    "rate": "0.667417"
+  },
+  "EUR": {
+    "symbol": "€",
+    "rate": "0.919033"
+  },
+  "DKK": {
+    "symbol": "krone",
+    "rate": "6.881903"
+  },
+  "CNY": {
+    "symbol": "¥",
+    "rate": "6.210192"
+  },
+  "CHF": {
+    "symbol": "CHF",
+    "rate": "0.984052"
+  },
+  "CAD": {
+    "symbol": "CA$",
+    "rate": "1.25804"
+  },
+  "AUD": {
+    "symbol": "AU$",
+    "rate": "1.28316"
+  }
+}
