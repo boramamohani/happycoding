@@ -1,1 +1,35 @@
 /*  */
+
+.fiveStar {
+	background-image: url(../images/five_stars.png);
+	width: 58px;
+	height: 14px;
+}
+
+.fourStar {
+	background-image: url(../images/four_stars.png);
+	width: 58px;
+	height: 14px;
+}
+
+.threeStar {
+	background-image: url(../images/three_stars.png);
+	width: 58px;
+	height: 14px;
+}
+
+.twoStar {
+	background-image: url(../images/two_stars.png);
+	width: 58px;
+	height: 14px;
+}
+
+.oneStar {
+	background-image: url(../images/one_star.png);
+	width: 58px;
+	height: 14px;
+}
+
+.zeroStar {
+	display: hidden;	
+}
