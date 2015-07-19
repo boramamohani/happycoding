@@ -11,7 +11,7 @@ var RIGHT_SIDE_CURRENCIES = ["CHF", "RUB", "DKK"] ;
 var currenciesJSON = "not_loaded" ; 
 
 
-app.filter('formatPrice', function() {	//filter to format currencies
+app.filter('formatPrice', function() {	
 		return function(input) {
 			var price = input.main_price_amount.toLocaleString()  ;  
 			
@@ -58,7 +58,56 @@ app.filter('formatPrice', function() {	//filter to format currencies
  			else return input + '개의 리뷰'
 		}
 	})
+	.filter('offset', function() {
+		return function(input, start) {
+			start = parseInt(start, 10);
+			return input.slice(start) ; 
+		}
+	})
 	.controller('MainController', ['$scope', '$http', function($scope, $http) {
+		$scope.itemsPerPage = 12 ; 
+		$scope.currentPage = 1 ; 
+
+		$scope.pageRange = function() {
+			var rangeSize = 5 ; 
+			var ret = [] ; 
+			var start;
+
+			start = $scope.currentPage ; 
+			if(start > $scope.pageCount() - rangeSize) {
+				start = $scope.pageCount() - rangeSize ; 
+			}
+			for (var i = start ; i < start + rangeSize ; i++) {
+				ret.push(i) ; 
+			}
+
+			return ret ; 
+		} ;	
+
+		$scope.prevPage = function() {
+			if ($scope.currentPage > 0) {$scope.currentPage--} ;
+		} ; 
+
+		$scope.prevPageDisabled = function() {
+			return $scope.currentPage === 0 ? "disabled" : "" ;
+		} ;
+
+		$scope.nextPage = function() {
+			if ($scope.currentPage < $scope.pageCount()) {$scope.currentPage++ };
+		} ;
+
+		$scope.nextPageDisabled = function(){
+			return $scope.currentPage === $scope.pageCount() ? "disabled" : "" ; 
+		} ;
+
+		$scope.pageCount = function() {
+			return Math.ceil($scope.tours.data.length / $scope.itemsPerPage) - 1 ; 
+		} ;
+
+		$scope.setPage = function(n) {
+			$scope.currentPage = n ; 
+		} ;
+
 		(function getTours() {
 			$scope.tours = {} ; 
 

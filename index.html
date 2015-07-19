@@ -17,34 +17,45 @@
   		<div class="container"> 
   			<div class="row">
 
-               <div ng-repeat="tour in tours.data" class="col-xs-12 col-sm-6 col-md-4">
-       					<img ng-src="{{ tour.profile_medium_url }}">
+               <div ng-repeat="tour in tours.data | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage" class="col-xs-12 col-sm-6 col-md-4">
+       				<img ng-src="{{ tour.profile_medium_url }}">
 
-                 <div class="main-info">
+                  <div class="main-info">
                      <div class="guidename">{{ tour.username }}</div>
                      <div class="title">{{ tour.title}}</div>
                      <div class="price">{{ tour | formatPrice }} <span>/ 1인</span></div>
-                 </div>
+                  </div>
        					
-                 <div class="tourimage">
-                 </div>
+                  <div class="tourimage">
+                  </div>
        					
-       			  <div class="sub-info">
+                  <div class="sub-info">
                      <div class="sub-details">
                         <span>{{ tour.private_tour | formatPrivateTour }} &middot; {{ tour | formatTourDuration}} &middot; {{ tour.tour_type | formatTourType}}</span>
                      </div>
                      <div class="sub-reviews">
                         <div ng-class="{'fiveStar': tour.score > 4.0, 'fourStar': tour.score <= 4.0 && tour.score >3.0, 'threeStar': tour.score <= 3.0 && tour.score > 2.0, 'twoStar': tour.score <= 2.0 && tour.score > 1.0, 'oneStar': tour.score <= 1.0 && tour.score > 0, 'zeroStar': tour.score === 0}"></div>
                         <span>{{ tour.total_traveler_reviews | formatReviews}}</span>
-                 </div>
-                     
-                 </div>
-                 
-       				
+                     </div>
+                  </div>
     				</div>
 
           </div>
 		</div>
+
+      <div class="pagination">
+            <ul>
+               <li ng-class="prevPageDisabled()">
+                  <a href ng-click="prevPage()">prev</a>
+               </li>
+               <li ng-repeat="n in pageRange()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                  <a href="#">{{n}}</a>
+               </li>
+               <li ng-class="nextPageDisabled()">
+                  <a href ng-click="nextPage()">next</a>
+               </li>
+            </ul>
+      </div>
 
   		<script src="bower_components/underscore/underscore-min.js" type="text/javascript"></script>
   		<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>  		
