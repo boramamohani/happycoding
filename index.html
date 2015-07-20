@@ -14,7 +14,41 @@
   </head>
   <body ng-controller="MainController">
 
-  		<div class="container"> 
+  		<div id='filter-bar'>
+         <div id='tour-type-filter'>
+            <ul>
+               <li>개별 여행</li>
+               <li>그룹 여행</li>
+            </ul>
+         </div>
+
+         <div id='tour-duration-filter'>
+            <ul>
+               <li>반나절</li>
+               <li>하루</li>
+               <li>하루이상</li>
+               <li>맞춤시간</li>
+            </ul>
+         </div>
+
+         <div id='tour-transportation-filter'>
+            <ul>
+               <li>도보</li>
+               <li>차량</li>
+               <li>자전거</li>
+            </ul>
+         </div>
+      </div>
+
+      <div id='sorting-bar'>
+         <ul>
+            <li>인기순</li>
+            <li>리뷰순</li>
+            <li>가격순</li>
+         </ul>
+      </div>
+
+      <div class="container"> 
   			<div class="row">
 
                <div ng-repeat="tour in tours.data | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage" class="col-xs-12 col-sm-6 col-md-4">

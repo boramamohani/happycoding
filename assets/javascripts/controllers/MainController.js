@@ -83,8 +83,7 @@ app.filter('formatPrice', function() {
 				start = $scope.totalPages() - rangeSize + 1 ; 
 			} else {
 				start = start - leftOffset
-			}
-			
+			}			
 			var end = ((start + rangeSize) > $scope.totalPages()) ? $scope.totalPages() : start + rangeSize -1;  
 			for (var i = start ; i <= end  ; i++) { ret.push(i) ; } 
 			return ret ; 
