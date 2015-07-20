@@ -70,43 +70,50 @@ app.filter('formatPrice', function() {
 
 		$scope.pageRange = function() {
 			var rangeSize = 5 ; 
+			var leftOffset = Math.floor(rangeSize/2); 
+			var rightOffset = $scope.totalPages() - leftOffset ; 
+			//alert($scope.totalPages() ) ; 
+
 			var ret = [] ; 
-			var start;
+			var start = $scope.currentPage ; 
 
-			start = $scope.currentPage ; 
-			if(start > $scope.pageCount() - rangeSize) {
-				start = $scope.pageCount() - rangeSize ; 
+			if (start <= leftOffset) {
+				start = 1 ;
+			} else if (start >= rightOffset) {
+				start = $scope.totalPages() - rangeSize + 1 ; 
+			} else {
+				start = start - leftOffset
 			}
-			for (var i = start ; i < start + rangeSize ; i++) {
-				ret.push(i) ; 
-			}
-
+			
+			var end = ((start + rangeSize) > $scope.totalPages()) ? $scope.totalPages() : start + rangeSize -1;  
+			for (var i = start ; i <= end  ; i++) { ret.push(i) ; } 
 			return ret ; 
 		} ;	
 
-		$scope.prevPage = function() {
-			if ($scope.currentPage > 0) {$scope.currentPage--} ;
-		} ; 
-
-		$scope.prevPageDisabled = function() {
-			return $scope.currentPage === 0 ? "disabled" : "" ;
-		} ;
-
-		$scope.nextPage = function() {
-			if ($scope.currentPage < $scope.pageCount()) {$scope.currentPage++ };
-		} ;
-
-		$scope.nextPageDisabled = function(){
-			return $scope.currentPage === $scope.pageCount() ? "disabled" : "" ; 
-		} ;
-
-		$scope.pageCount = function() {
-			return Math.ceil($scope.tours.data.length / $scope.itemsPerPage) - 1 ; 
+		$scope.totalPages = function() {
+			return Math.ceil($scope.tours.data.length / $scope.itemsPerPage) ; 
 		} ;
 
 		$scope.setPage = function(n) {
 			$scope.currentPage = n ; 
 		} ;
+
+		$scope.prevPage = function() {
+			if ($scope.currentPage > 1) {$scope.currentPage--} ;
+		} ; 
+
+		$scope.prevPageDisabled = function() {
+			return $scope.currentPage === 1 ? "disabled" : "" ;
+		} ;
+
+		$scope.nextPage = function() {
+			if ($scope.currentPage < $scope.totalPages()) {$scope.currentPage++ };
+		} ;
+
+		$scope.nextPageDisabled = function(){
+			return $scope.currentPage === $scope.totalPages() ? "disabled" : "" ; 
+		} ;
+
 
 		(function getTours() {
 			$scope.tours = {} ; 
