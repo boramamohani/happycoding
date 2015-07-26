@@ -27,7 +27,7 @@ app.filter('formatPrice', function() {
 			return price ; 
 		}
 	})
-	.filter('formatPrivateTour', function() {
+	.filter('formatTourType', function() {
 		return function(input) {
 			if (input) return "개별 여행" ; 
 			else return "그룹 여행" ; 
@@ -44,7 +44,7 @@ app.filter('formatPrice', function() {
 			else return '' ; 
 		}
 	})
-	.filter('formatTourType', function(){
+	.filter('formatTourTransportation', function(){
 		return function(input) {
 			if (input === 'walking') return '워킹투어' ; 
 			else if (input === 'private_car') return '차량투어'; 
@@ -113,6 +113,38 @@ app.filter('formatPrice', function() {
 			return $scope.currentPage === $scope.totalPages() ? "disabled" : "" ; 
 		} ;
 
+
+		$scope.typeFilter = {
+			individual: true, 
+			group: true
+		} ; 
+
+		$scope.durationFilter = {
+			halfDay: true,
+			day: true,
+			dayPlus: true,
+			flexible: true
+		} ; 
+
+		$scope.transportationFilter = {
+			walk: true,
+			auto: true,
+			bike: true
+		} ;
+
+		$scope.filterList = function(tour) {
+			if (($scope.typeFilter.individual === false) && (tour.private_tour === true)) return false; 
+			if (($scope.typeFilter.group === false) && (tour.private_tour === false)) return false ; 
+			if (($scope.durationFilter.flexible === false) && (tour.duration_unit === 'flexible')) return false
+			if (($scope.durationFilter.dayPlus === false) && (tour.duration_unit === 'day')) return false ; 
+			if (($scope.durationFilter.day === false) && (tour.duration_unit === 'hour') && (tour.duration_size > 6)) return false ; 
+			if (($scope.durationFilter.halfDay === false) && (tour.duration_unit === 'hour') && (tour.duration_size <= 6)) return false ; 
+			if (($scope.transportationFilter.walk === false) && (tour.tour_type === 'walking')) return false ; 
+			if (($scope.transportationFilter.auto === false) && (tour.tour_type === 'private_car')) return false ; 
+			if (($scope.transportationFilter.bike === false) && (tour.tour_type === 'bicycle')) return false ; 
+			
+			return true;
+		} ; 
 
 		(function getTours() {
 			$scope.tours = {} ; 

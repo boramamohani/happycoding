@@ -16,27 +16,39 @@
 
   		<div id='filter-bar'>
          <div id='tour-type-filter'>
-            <ul>
-               <li>개별 여행</li>
-               <li>그룹 여행</li>
-            </ul>
+            <label>
+               <input type="checkbox" ng-model="typeFilter.individual"> 개별여행
+            </label>
+            <label>
+               <input type="checkbox" ng-model="typeFilter.group"> 그룹여행
+            </label>
          </div>
 
          <div id='tour-duration-filter'>
-            <ul>
-               <li>반나절</li>
-               <li>하루</li>
-               <li>하루이상</li>
-               <li>맞춤시간</li>
-            </ul>
+            <label>
+               <input type="checkbox" ng-model="durationFilter.halfDay"> 반나절
+            </label>
+            <label>
+               <input type="checkbox" ng-model="durationFilter.day"> 하루
+            </label>
+            <label>
+               <input type="checkbox" ng-model="durationFilter.dayPlus"> 하루이상
+            </label>
+            <label>
+               <input type="checkbox" ng-model="durationFilter.flexible"> 맞춤시간
+            </label>
          </div>
 
          <div id='tour-transportation-filter'>
-            <ul>
-               <li>도보</li>
-               <li>차량</li>
-               <li>자전거</li>
-            </ul>
+            <label>
+               <input type="checkbox" ng-model="transportationFilter.walk"> 도보
+            </label>
+            <label>
+               <input type="checkbox" ng-model="transportationFilter.auto"> 차량
+            </label>
+            <label>
+               <input type="checkbox" ng-model="transportationFilter.bike"> 자전거
+            </label>
          </div>
       </div>
 
@@ -51,7 +63,7 @@
       <div class="container"> 
   			<div class="row">
 
-               <div ng-repeat="tour in tours.data | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage" class="col-xs-12 col-sm-6 col-md-4">
+               <div ng-repeat="tour in tours.data | filter: filterList | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage" class="col-xs-12 col-sm-6 col-md-4">
        				<img ng-src="{{ tour.profile_medium_url }}">
 
                   <div class="main-info">
@@ -65,9 +77,11 @@
        					
                   <div class="sub-info">
                      <div class="sub-details">
-                        <span>{{ tour.private_tour | formatPrivateTour }} &middot; {{ tour | formatTourDuration}} &middot; {{ tour.tour_type | formatTourType}}</span>
+                        <span>{{ tour.private_tour | formatTourType }} &middot; {{ tour | formatTourDuration}} &middot; {{ tour.tour_type | formatTourTransportation}}</span>
                      </div>
                      <div class="sub-reviews">
+
+                        <!-- create ng class as function-->
                         <div ng-class="{'fiveStar': tour.score > 4.0, 'fourStar': tour.score <= 4.0 && tour.score >3.0, 'threeStar': tour.score <= 3.0 && tour.score > 2.0, 'twoStar': tour.score <= 2.0 && tour.score > 1.0, 'oneStar': tour.score <= 1.0 && tour.score > 0, 'zeroStar': tour.score === 0}"></div>
                         <span>{{ tour.total_traveler_reviews | formatReviews}}</span>
                      </div>
