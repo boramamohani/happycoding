@@ -160,48 +160,46 @@ app.filter('formatPrice', function() {
 					}) ;  
 			}
 
-			$http({method: 'GET', url: offersUrl})
+			$http({method: 'GET', url: offersUrl}) //GET Offers 
 				.success(function(data, status) {
 					console.log("STATUS " + status) ; 
-
 					$scope.tours.status = status ; 
 					$scope.tours.data = data ;
 
-					// alert($scope.offers.data[2].title) ; 
-
-					$http({method: 'GET', url: guidesUrl})
-						.success(function(guidesData, guidesStatus) {
-							$scope.tours.status = guidesStatus ; 
+					$http({method: 'GET', url: guidesUrl})	// GET guides
+						.success(function(guidesData) {
 							var guides = guidesData ; 
 
-							_.each($scope.tours.data, function searchOurGuide(element, index, list) {
-								// console.log(element.guide_id) ; 
-								// console.log(guides) ; 
-								var ourGuide = _.find(guides, function(guide) {
-									return guide.id ===	element.guide_id ; 
-								}) ;
-								$scope.tours.data[index].username = ourGuide.user.username ; 
-								$scope.tours.data[index].profile_medium_url = ourGuide.user.profile_medium_url ;  
-							});
+							$http({method: 'GET', url: countryJsonUrl})		//GET country
+								.success(function(countryData) {	
+									var cities = countryData.city_infos; 
+									var cities_min = {} ; 
+									_.each(cities, function iterateCities(element, index, list) {
+										cities_min[element.id] = element.locale_names.ko ; 
+									});
 
-							$http({method: 'GET', url: countryJsonUrl})
-								.success(function(countryData, countryStatus) {
-								
+									_.each($scope.tours.data, function searchOurGuide(element, index, list) {
+										var ourGuide = _.find(guides, function(guide) {
+											return guide.id ===	element.guide_id ; 
+										}) ;
+										$scope.tours.data[index].username = ourGuide.user.username ; 
+										$scope.tours.data[index].profile_medium_url = ourGuide.user.profile_medium_url ;  
+										$scope.tours.data[index].cityName = cities_min[element.city_info_id] ; 
+									});
+
 								})
 								.error(function(data, status) {
-
+									console.error("ERROR: failed at getting Country data") ; 
 								}) ; 
 						})
-						.error(function(data, status) {
-							//insert more code heres
+						.error(function(data, status) {	
 							console.error("ERROR: failed at getting Guides data") ;
 						}) ; 
 				})
-				.error(function(data, status) {
-					$scope.offers.status = status ; 
-					$scope.offers.data = data || "request failed" ; 
-
-					console.error("ERROR: failed at getting Tours data") ; 
+				.error(function(data, status) {	
+					// $scope.offers.status = status ; 
+					// $scope.offers.data = data || "request failed" ; 
+					console.error("ERROR: failed at getting Offers data") ; 
 				}) ; 	
 		}) () ; 
 	}]) ; 

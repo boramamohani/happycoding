@@ -80,11 +80,13 @@
                         <span>{{ tour.private_tour | formatTourType }} &middot; {{ tour | formatTourDuration}} &middot; {{ tour.tour_type | formatTourTransportation}}</span>
                      </div>
                      <div class="sub-reviews">
-
                         <!-- create ng class as function-->
                         <div ng-class="{'fiveStar': tour.score > 4.0, 'fourStar': tour.score <= 4.0 && tour.score >3.0, 'threeStar': tour.score <= 3.0 && tour.score > 2.0, 'twoStar': tour.score <= 2.0 && tour.score > 1.0, 'oneStar': tour.score <= 1.0 && tour.score > 0, 'zeroStar': tour.score === 0}"></div>
                         <span>{{ tour.total_traveler_reviews | formatReviews}}</span>
                      </div>
+                  </div>
+                  <div class="city-info">
+                     {{ tour.cityName }}
                   </div>
     				</div>
 

@@ -94,6 +94,11 @@ margin 10~12
 	display: inline-block ; 
 }
 
+.city-info {
+	position: absolute;
+	top: 340px;
+}
+
 .fiveStar {
 	background-image: url(../images/five_stars.png);
 	width: 58px;
