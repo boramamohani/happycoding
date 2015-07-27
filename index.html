@@ -61,35 +61,37 @@
       <div class="container"> 
   			<div class="row">
 
-               <div ng-repeat="tour in tours.data | filter: filterList | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage" class="col-xs-12 col-sm-6 col-md-4">
-       				<img ng-src="{{ tour.profile_medium_url }}">
+            <div ng-repeat="tour in tours.data | filter: filterList | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage" class="col-sm-6 col-md-4">
+       				
+               <div class="card">
+                  <img ng-src="{{ tour.profile_medium_url }}">
 
                   <div class="main-info">
                      <div class="guidename">{{ tour.username }}</div>
                      <div class="title">{{ tour.title}}</div>
                      <div class="price">{{ tour | formatPrice }} <span>/ 1인</span></div>
                   </div>
-       					
-                  <div class="tourimage">
-                  </div>
-       					
+         					
+                  <div class="tourimage"> </div>
+                  
                   <div class="sub-info">
                      <div class="sub-details">
-                        <span>{{ tour.private_tour | formatTourType }} &middot; {{ tour | formatTourDuration}} &middot; {{ tour.tour_type | formatTourTransportation}}</span>
+                          <span>{{ tour.private_tour | formatTourType }} &middot; {{ tour | formatTourDuration}} &middot; {{ tour.tour_type | formatTourTransportation}}</span>
                      </div>
                      <div class="sub-reviews">
-                        <!-- create ng class as function-->
                         <div ng-class="scoreToStar(tour)"></div>
                         <span>{{ tour.total_traveler_reviews | formatReviews}}</span>
                      </div>
                   </div>
+                  
                   <div class="city-info">
                      {{ tour.cityName }}
                   </div>
-    				</div>
+               </div>
+            </div>
 
           </div>
-		</div>
+      </div>
 
       <div class="pagination">
             <ul>

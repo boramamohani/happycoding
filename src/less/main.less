@@ -1,0 +1,138 @@
+.card {
+	border-top: 1px solid @grey ;
+	border-bottom: 1px solid @grey ;
+
+	height: 244px;
+
+	img {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+
+		width: 40px;
+		height: 40px;
+		border-radius: 20px
+	}
+}
+
+
+.main-info {
+	position: absolute;
+	left: 62px;
+	top: 10px;
+
+	.guidename {
+		font-family: "Apple SD Gothic Neo", sans-serif ; 
+		font-size: 12px ; 
+		font-weight: 500 ; 
+		color: @grey ; 
+	}
+
+	.title {
+		font-family: "Apple SD Gothic Neo", sans-serif ; 
+		font-size: 12px ; 
+		font-weight: 700 ; 
+		color: rgba(66, 66, 66, 1);	
+	}
+	.price {
+		font-family: "Apple SD Gothic Neo", sans-serif ; 
+		font-size: 14px ; 
+		font-weight: 500 ; 
+		color: @pointblue ; 
+
+		span {
+			font-size: 12px ; 
+			color: @grey ; 
+		}
+	}
+}
+
+
+.tourimage {
+	position: absolute;
+	top: 98px;
+	left: 0;
+	background-color: rgba(111,111,111,0.5);
+
+	width: 100%;
+	height: 166px; 
+}
+
+.sub-info {
+	position: absolute;
+	top: 266px;
+	left: 0;
+	width: 100% ; 
+
+	text-align: center ; 
+
+	.sub-details {
+		position: relative ; 
+		top: 8px;
+	}
+	.sub-reviews {
+		position: relative ; 
+		top: 6px;
+		display: inline-block ; 
+	}
+}
+
+
+.city-info {
+	position: absolute;
+	top: 340px;
+}
+
+.fiveStar {
+	background-image: url("@{images_path}/five_stars.png");
+	width: 58px;
+	height: 14px;
+	display: inline-block;
+}
+
+.fourStar {
+	background-image: url("@{images_path}/four_stars.png");
+	width: 58px;
+	height: 14px;
+	display: inline-block;
+}
+
+.threeStar {
+	background-image: url("@{images_path}/three_stars.png");
+	width: 58px;
+	height: 14px;
+	display: inline-block;
+}
+
+.twoStar {
+	background-image: url("@{images_path}/two_stars.png");
+	width: 58px;
+	height: 14px;
+	display: inline-block;
+}
+
+.oneStar {
+	background-image: url("@{images_path}/one_star.png");
+	width: 58px;
+	height: 14px;
+	display: inline-block;
+}
+
+.zeroStar {
+	display: hidden;	
+
+}
+
+.disabled {
+	opacity: 0.2; 
+}
+
+.active {
+	color: rgba(117, 117, 117, 1);
+}
+
+a, a:visited, a:hover, a:active {
+	color: inherit;
+	text-decoration: none ; 
+};
+
