@@ -79,13 +79,13 @@ app.filter('formatPrice', function() {
 					}) ;  
 			}
 
-			$http({method: 'GET', url: offersUrl}) //GET Offers 
+			$http({method: 'GET', url: offersUrl}) 		//GET Offers 
 				.success(function(data, status) {
 					console.log("STATUS " + status) ; 
 					$scope.tours.status = status ; 
 					$scope.tours.data = data ;
 
-					$http({method: 'GET', url: guidesUrl})	// GET guides
+					$http({method: 'GET', url: guidesUrl})		// GET guides
 						.success(function(guidesData) {
 							var guides = guidesData ; 
 
@@ -125,6 +125,16 @@ app.filter('formatPrice', function() {
 
 		$scope.itemsPerPage = 12 ; 
 		$scope.currentPage = 1 ; 
+
+		$scope.scoreToStar = function(tour) {
+			if (tour.score > 4.0) return 'fiveStar' ; 
+			else if (tour.score <= 4.0 && tour.score >3.0) return 'fourStar' ;
+			else if (tour.score <= 3.0 && tour.score > 2.0) return 'threeStar' ; 
+			else if (tour.score <= 2.0 && tour.score > 1.0) return 'twoStar' ; 
+			else if (tour.score <= 1.0 && tour.score > 0) return 'oneStar' ; 
+			else if (tour.score === 0) return 'zeroStar' ;
+			else return "" ; 
+		} ; 
 
 		$scope.pageRange = function() {
 			var rangeSize = 5 ; 
