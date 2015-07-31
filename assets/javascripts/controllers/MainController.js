@@ -8,23 +8,25 @@ var currenciesUrl = 'https://s3-ap-northeast-1.amazonaws.com/mrt-testdata/jsons/
 
 var LEFT_SIDE_CURRENCIES = ["KRW", "USD", "EUR", "JPY", "TWD", "THB", "NZD", "MYR", "HKD", "GBP", "CNY", "CAD", "AUD" ] ; 
 var RIGHT_SIDE_CURRENCIES = ["CHF", "RUB", "DKK"] ; 
-var currenciesJSON = "not_loaded" ; 
 
 
-app.filter('formatPrice', function() {	
-		return function(input) {
+app.filter('formatPrice', function(fetchData) {	
+		return function(input) {	
 			var price = input.main_price_amount.toLocaleString()  ;  
-			
-			var foundRight = _.find(RIGHT_SIDE_CURRENCIES, function(currency) {
-				return currency === input.main_price_currency_code ; 
-			}) ; 
-			if (typeof foundRight === 'undefined') {
-				price = currenciesJSON[input.main_price_currency_code].symbol + ' ' + price ;
-			} else {
-				price += " " + currenciesJSON[input.main_price_currency_code].symbol ; 
-			}
 
-			return price ; 
+			fetchData.currencies(function(data) {	
+				var currenciesJSON = data ;
+				var foundRight = _.find(RIGHT_SIDE_CURRENCIES, function(currency) {
+					return currency === input.main_price_currency_code ; 
+				}) ;
+
+				if (typeof foundRight === 'undefined') {
+					price = currenciesJSON[input.main_price_currency_code].symbol + ' ' + price ;
+				} else {
+					price += " " + currenciesJSON[input.main_price_currency_code].symbol ; 
+				}
+				return price ; 
+			}) ;			
 		}
 	})
 	.filter('formatTourType', function() {
@@ -64,64 +66,52 @@ app.filter('formatPrice', function() {
 			return input.slice(start) ; 
 		}
 	})
-	.controller('MainController', ['$scope', '$http', function($scope, $http) {
-		(function getTours() {
-			$scope.tours = {} ; 
+	.factory('processData', ['$q', 'fetchData', function($q, fetchData) {
+		var promises = {
+			offers : fetchData.offers,
+			guides: fetchData.guides,
+			countries: fetchData.countries
+		} ; 
+		
+		return function(callback) {
+			$q.all(promises).then(function(res) {
+				var cities = res.countries.data.city_infos ; 
+				var cities_min = {} ; 
+				var tours = res.offers.data ; 
+				var guides = res.guides.data ;
 
-			if (currenciesJSON === "not_loaded") { 
-				$http({method: 'GET', url: currenciesUrl})
-					.success(function(data, status) {
-						currenciesJSON = data ; 
-						console.log("STATUS " + status + ": succeeded in getting today's currencies") ; 
-					})
-					.error(function(data, status) {
-						console.error("STATUS " + status + ", ERROR: failed at getting Tours data") ; 
-					}) ;  
-			}
+				_.each(cities, function iterateCities(element, index, list) {
+					cities_min[element.id] = element.locale_names.ko ; 
+				});
 
-			$http({method: 'GET', url: offersUrl}) 		//GET Offers 
-				.success(function(data, status) {
-					console.log("STATUS " + status) ; 
-					$scope.tours.status = status ; 
-					$scope.tours.data = data ;
+				_.each(tours, function searchOurGuide(element, index, list) {
+					var ourGuide = _.find(guides, function(guide) {
+						return guide.id ===	element.guide_id ; 
+					}) ;
+					tours[index].username = ourGuide.user.username ; 
+					tours[index].profile_medium_url = ourGuide.user.profile_medium_url ;  
+					tours[index].cityName = cities_min[element.city_info_id] ; 
+				});	
+				callback(tours) ; 
+			}) ; 		
+		}
 
-					$http({method: 'GET', url: guidesUrl})		// GET guides
-						.success(function(guidesData) {
-							var guides = guidesData ; 
-
-							$http({method: 'GET', url: countryJsonUrl})		//GET country
-								.success(function(countryData) {	
-									var cities = countryData.city_infos; 
-									var cities_min = {} ; 
-									_.each(cities, function iterateCities(element, index, list) {
-										cities_min[element.id] = element.locale_names.ko ; 
-									});
-
-									_.each($scope.tours.data, function searchOurGuide(element, index, list) {
-										var ourGuide = _.find(guides, function(guide) {
-											return guide.id ===	element.guide_id ; 
-										}) ;
-										$scope.tours.data[index].username = ourGuide.user.username ; 
-										$scope.tours.data[index].profile_medium_url = ourGuide.user.profile_medium_url ;  
-										$scope.tours.data[index].cityName = cities_min[element.city_info_id] ; 
-									});
-
-								})
-								.error(function(data, status) {
-									console.error("ERROR: failed at getting Country data") ; 
-								}) ; 
-						})
-						.error(function(data, status) {	
-							console.error("ERROR: failed at getting Guides data") ;
-						}) ; 
-				})
-				.error(function(data, status) {	
-					// $scope.offers.status = status ; 
-					// $scope.offers.data = data || "request failed" ; 
-					console.error("ERROR: failed at getting Offers data") ; 
-				}) ; 	
-		}) () ; 
-
+		
+	}])
+	.factory('fetchData', ['$http', function($http) {
+		return {
+			offers: $http({method: 'GET', url: offersUrl, cache: true}),
+			currencies: $http({method: 'GET', url: currenciesUrl, cache: true}), 
+			countries: $http({method: 'GET', url: countryJsonUrl, cache: true}),
+			guides: $http({method: 'GET', url: guidesUrl, cache: true})
+		} ; 
+	}]) 
+	.controller('MainController', ['$scope', 'processData', function($scope, processData) {
+		
+		processData(function(tours) {
+			console.log(tours) ;  
+			$scope.tours = tours ; 
+		}) ; 
 
 		$scope.itemsPerPage = 12 ; 
 		$scope.currentPage = 1 ; 
@@ -158,7 +148,7 @@ app.filter('formatPrice', function() {
 		} ;	
 
 		$scope.totalPages = function() {
-			return Math.ceil($scope.tours.data.length / $scope.itemsPerPage) ; 
+			return Math.ceil($scope.tours.length / $scope.itemsPerPage) ; 
 		} ;
 
 		$scope.setPage = function(n) {

@@ -61,18 +61,19 @@
       <div class="container"> 
   			<div class="row">
 
-            <div ng-repeat="tour in tours.data | filter: filterList | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage" class="col-sm-6 col-md-4">
+            <div ng-repeat="tour in tours | filter: filterList | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage" class="col-xs-12 col-sm-6 col-md-4">
        				
                <div class="card">
-                  <img ng-src="{{ tour.profile_medium_url }}">
-
                   <div class="main-info">
+                     <div class="guidethumb"> <img ng-src="{{ tour.profile_medium_url }}"> </div>
+
                      <div class="guidename">{{ tour.username }}</div>
                      <div class="title">{{ tour.title}}</div>
                      <div class="price">{{ tour | formatPrice }} <span>/ 1인</span></div>
+
                   </div>
          					
-                  <div class="tourimage"> </div>
+                  <div class="tourimage"><img src="assets/images/toursample.jpeg"></div>
                   
                   <div class="sub-info">
                      <div class="sub-details">
@@ -87,7 +88,8 @@
                   <div class="city-info">
                      {{ tour.cityName }}
                   </div>
-               </div>
+               </div> 
+
             </div>
 
           </div>

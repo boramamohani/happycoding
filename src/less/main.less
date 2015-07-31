@@ -1,87 +1,126 @@
+.col-xs-12 {
+	padding: 0 ; //reset default padding
+	background-color: @lightgrey;
+}
+
 .card {
 	border-top: 1px solid @grey ;
 	border-bottom: 1px solid @grey ;
+	margin-top: 6px;
 
-	height: 244px;
+	font-family: "Apple SD Gothic Neo", sans-serif ; 
 
-	img {
-		position: absolute;
-		top: 10px;
-		left: 10px;
+	.main-info {
+		background-color: @white;
+		position: relative ;
+		height: 100px ; 
 
-		width: 40px;
-		height: 40px;
-		border-radius: 20px
-	}
-}
+		.guidethumb  {
+			position: absolute;
+			left: 16px ; 
+			top: 12px ; 
 
+			width: @guide-thumb-radius;
+			height: @guide-thumb-radius;
+			border-radius: @guide-thumb-radius/2 ; 
+			border: 1px solid @grey-0-5 ; 
+			box-sizing: content-box;
+			img {
+				width: @guide-thumb-radius;
+				height: @guide-thumb-radius;
+				border-radius: @guide-thumb-radius/2 ; 
+				box-sizing: border-box;
+			}
+		}
+		.guidename {
+			position: absolute;
+			padding-right: 16px ;
+			left: 68px ; 
+			top: 12px ; 
 
-.main-info {
-	position: absolute;
-	left: 62px;
-	top: 10px;
-
-	.guidename {
-		font-family: "Apple SD Gothic Neo", sans-serif ; 
-		font-size: 12px ; 
-		font-weight: 500 ; 
-		color: @grey ; 
-	}
-
-	.title {
-		font-family: "Apple SD Gothic Neo", sans-serif ; 
-		font-size: 12px ; 
-		font-weight: 700 ; 
-		color: rgba(66, 66, 66, 1);	
-	}
-	.price {
-		font-family: "Apple SD Gothic Neo", sans-serif ; 
-		font-size: 14px ; 
-		font-weight: 500 ; 
-		color: @pointblue ; 
-
-		span {
 			font-size: 12px ; 
+			font-weight: 500 ; 
 			color: @grey ; 
 		}
+
+		.title {
+			position: absolute;
+			padding-right: 16px ;
+			left: 68px ; 
+			top: 30px ; 
+
+			font-size: 14px ; 
+			font-weight: 700 ;
+			line-height: 20px ;  
+			color: rgba(66, 66, 66, 1);	
+		}
+		.price {
+			position: absolute;
+			padding-right: 20px ;
+			left: 68px;
+			top: 72px ; 
+
+			font-size: 14px ; 
+			font-weight: 500 ; 
+			color: @pointblue ; 
+
+			span {
+				font-size: 12px ; 
+				color: @grey ; 
+			}
+		}
+		
+	}
+	.tourimage {
+		position: relative;
+		width: 100%;
+		height: 120px ; 
+		overflow: hidden;
+		img {
+			position: absolute;
+			left: 50% ; 
+			top: 50% ; 
+			width: 100% ; 
+			transform: translate(-50%, -50%) ; 
+		}
+	}
+
+	.sub-info {
+		display: none ;
+		/* 
+		position: absolute;
+		top: 266px;
+		left: 0;
+		width: 100% ; 
+
+		text-align: center ; 
+
+		.sub-details {
+			position: relative ; 
+			top: 8px;
+		}
+		.sub-reviews {
+			position: relative ; 
+			top: 6px;
+			display: inline-block ; 
+		}
+		*/
+	}
+
+	.city-info {
+		padding-top: 6px;
+		height: 24px;
+		font-size: 12px;
+		text-align: center;
+		color: @grey;
+		background-color: @slightwhite;
+		
+		
 	}
 }
 
 
-.tourimage {
-	position: absolute;
-	top: 98px;
-	left: 0;
-	background-color: rgba(111,111,111,0.5);
 
-	width: 100%;
-	height: 166px; 
-}
-
-.sub-info {
-	position: absolute;
-	top: 266px;
-	left: 0;
-	width: 100% ; 
-
-	text-align: center ; 
-
-	.sub-details {
-		position: relative ; 
-		top: 8px;
-	}
-	.sub-reviews {
-		position: relative ; 
-		top: 6px;
-		display: inline-block ; 
-	}
-}
-
-
-.city-info {
-	position: absolute;
-	top: 340px;
-}
 
 .fiveStar {
 	background-image: url("@{images_path}/five_stars.png");
