@@ -1,1 +1,4 @@
-var app = angular.module("happyCoding", []) ;
+var app = angular.module("happyCoding", [
+	'mainController',
+	'tourFactories'
+]) ;
