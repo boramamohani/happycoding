@@ -6,13 +6,38 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <title>진짜 여행의 시작 :: 마이리얼트립</title>
+      <link rel="shortcut icon" type="image/x-icon" href="https://d276fqercnuq4h.cloudfront.net/assets/favicon-5753f36c1133b30a4362c32b739822fdfbd182547bbadc3f8547ffa97eddd278.ico">
 
       <link rel="stylesheet" href="assets/stylesheets/styles.css">
 
   </head>
   <body ng-controller="mainCtrl">
 
+      <nav>
+         <div id="logo"></div>
+         <div id="menu">
+            <img src="assets/images/account-profile.png">
+         </div>
+         <div id="search"><span>파리 | 프랑스</span></div>
+      </nav>
+
+      <div class="cover">
+         <!-- <img src="assets/images/coverimage.jpeg">-->
+         <img src="assets/images/coverimage.jpeg">
+         <div class="filter"></div>
+         <div class="main-title">
+            <h1>프랑스</h1>
+         </div>
+         <div class="sub-title">
+            <h2>France</h2>
+         </div>
+      </div>
+
   		<div id='filter-bar'>
+         <div class="labelbox">
+            필터
+         </div>
+         
          <div id='tour-type-filter'>
             <label>
                <input type="checkbox" ng-model="typeFilter.individual" ng-click="setPage(1)"> 개별여행

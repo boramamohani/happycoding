@@ -1,5 +1,6 @@
 angular.module('mainController', [])
 	.controller('mainCtrl', ['$scope', 'processTourData', function($scope, processTourData) {		
+		
 		processTourData(function(tours) {
 			$scope.tours = tours ; 
 		}) ; 
@@ -20,7 +21,7 @@ angular.module('mainController', [])
 		$scope.pageRange = function() {
 			var rangeSize = 5 ; 
 			var leftOffset = Math.floor(rangeSize/2); 
-			var rightOffset = $scope.totalPages() - leftOffset ; 
+			var rightOffset = $scope.totalPages() - leftOffset ;  // TODO cannot read undefined
 			//alert($scope.totalPages() ) ; 
 
 			var ret = [] ; 
@@ -39,7 +40,7 @@ angular.module('mainController', [])
 		} ;	
 
 		$scope.totalPages = function() {
-			return Math.ceil($scope.tours.length / $scope.itemsPerPage) ; 
+			return Math.ceil($scope.tours.length / $scope.itemsPerPage) ; // TODO cannot read length of undefined (from pageRange)
 		} ;
 
 		$scope.setPage = function(n) {
@@ -95,6 +96,12 @@ angular.module('mainController', [])
 			return true;
 		} ; 
 	}])  
+	.filter('offset', function() {
+		return function(input, start) {
+			start = parseInt(start, 10);
+			return input.slice(start) ; // TODO cannot read slice of undefined
+		}
+	})
 	.filter('formatTourType', function() {
 		return function(input) {
 			if (input) return "개별 여행" ; 
@@ -125,10 +132,4 @@ angular.module('mainController', [])
 			if (input === 0 || typeof input === 'undefined') return '리뷰 이벤트'
  			else return input + '개의 리뷰'
 		}
-	})
-	.filter('offset', function() {
-		return function(input, start) {
-			start = parseInt(start, 10);
-			return input.slice(start) ; 
-		}
-	});
+	}) ;
